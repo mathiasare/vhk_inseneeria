@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { SensorDataChart } from "./SensorDataChart";
 
 export function UnassignedSensorDataTable({ teamId }: { teamId: number }) {
   const { data: readings, isLoading } = useQuery({
@@ -17,7 +18,7 @@ export function UnassignedSensorDataTable({ teamId }: { teamId: number }) {
   });
 
   return (
-    <div className="flex flex-col gap-4 h-full">
+    <div className="flex flex-col gap-4">
       <div>
         <h2 className="text-lg font-semibold">Incoming Sensor Data</h2>
         <p className="text-sm text-muted-foreground">
@@ -25,7 +26,9 @@ export function UnassignedSensorDataTable({ teamId }: { teamId: number }) {
         </p>
       </div>
 
-      <div className="rounded-lg border border-border overflow-auto flex-1">
+      {readings && readings.length > 0 && <SensorDataChart data={readings} />}
+
+      <div className="rounded-lg border border-border overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow>

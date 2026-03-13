@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { SensorDataChart } from "./SensorDataChart";
 
 export function SensorDataTable({ experimentId }: { experimentId: number }) {
   const { data: readings, isLoading } = useQuery({
@@ -17,8 +18,11 @@ export function SensorDataTable({ experimentId }: { experimentId: number }) {
   });
 
   return (
-    <div className="rounded-lg border border-border overflow-hidden">
-      <Table>
+    <div className="flex flex-col gap-4">
+      {readings && readings.length > 0 && <SensorDataChart data={readings} />}
+
+      <div className="rounded-lg border border-border overflow-hidden">
+        <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Timestamp</TableHead>
@@ -63,7 +67,8 @@ export function SensorDataTable({ experimentId }: { experimentId: number }) {
             ))
           )}
         </TableBody>
-      </Table>
+        </Table>
+      </div>
     </div>
   );
 }
