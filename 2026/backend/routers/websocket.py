@@ -14,7 +14,7 @@ async def team_ws(websocket: WebSocket, team_id: int):
     try:
         team = Team.get_by_id(team_id)
     except Team.DoesNotExist:
-        await websocket.close(code=4004, reason="Team not found")
+        await websocket.close(code=404, reason="Team not found")
         return
 
     await websocket.accept()
