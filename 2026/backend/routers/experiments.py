@@ -128,55 +128,46 @@ def list_sensor_data(experiment_id: int):
     ]
 
 
-# ── CSV exports ──────────────────────────────────────────
+# ── CSV export ───────────────────────────────────────────
 
-@router.get("/{experiment_id}/export/sensor-data.csv")
-def export_sensor_data_csv(experiment_id: int):
+@router.get("/{experiment_id}/export/data.csv")
+def export_combined_csv(experiment_id: int):
     _get_experiment(experiment_id)
+
+    metrics = list(
+        Metric.select()
+        .where(Metric.experiment == experiment_id)
+        .order_by(Metric.name)
+    )
+    metric_names = list(dict.fromkeys(m.name for m in metrics))
+    metric_values = {m.name: m.value for m in metrics}
+
+    sensor_columns = [
+        "timestamp", "acceleration_x", "acceleration_y", "acceleration_z", "heart_rate",
+    ]
 
     buf = io.StringIO()
     writer = csv.writer(buf)
-    writer.writerow([
-        "timestamp", "acceleration_x", "acceleration_y", "acceleration_z", "heart_rate",
-    ])
+    writer.writerow(sensor_columns + metric_names)
+
     for s in (
         SensorData.select()
         .where(SensorData.experiment == experiment_id)
         .order_by(SensorData.timestamp)
     ):
-        writer.writerow([
+        row = [
             s.timestamp.isoformat(),
             s.acceleration_x,
             s.acceleration_y,
             s.acceleration_z,
             s.heart_rate,
-        ])
+        ]
+        row += [metric_values.get(name, "") for name in metric_names]
+        writer.writerow(row)
 
     buf.seek(0)
     return StreamingResponse(
         buf,
         media_type="text/csv",
-        headers={"Content-Disposition": f"attachment; filename=sensor_data_exp{experiment_id}.csv"},
-    )
-
-
-@router.get("/{experiment_id}/export/metrics.csv")
-def export_metrics_csv(experiment_id: int):
-    _get_experiment(experiment_id)
-
-    buf = io.StringIO()
-    writer = csv.writer(buf)
-    writer.writerow(["name", "value", "created_at"])
-    for m in (
-        Metric.select()
-        .where(Metric.experiment == experiment_id)
-        .order_by(Metric.created_at)
-    ):
-        writer.writerow([m.name, m.value, m.created_at.isoformat()])
-
-    buf.seek(0)
-    return StreamingResponse(
-        buf,
-        media_type="text/csv",
-        headers={"Content-Disposition": f"attachment; filename=metrics_exp{experiment_id}.csv"},
+        headers={"Content-Disposition": f"attachment; filename=experiment_{experiment_id}.csv"},
     )

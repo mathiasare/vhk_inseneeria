@@ -1,10 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  startExperiment,
-  stopExperiment,
-  exportSensorDataUrl,
-  exportMetricsUrl,
-} from "@/lib/api";
+import { startExperiment, stopExperiment, exportCsvUrl } from "@/lib/api";
 import type { Experiment } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -102,17 +97,11 @@ export function ExperimentDetail({ experiment }: { experiment: Experiment }) {
               </Button>
             </div>
 
-            <div className="flex gap-2 pt-2 border-t border-border">
+            <div className="pt-2 border-t border-border">
               <Button variant="outline" size="sm" asChild>
-                <a href={exportSensorDataUrl(experiment.id)} download>
+                <a href={exportCsvUrl(experiment.id)} download>
                   <Download className="h-4 w-4 mr-1" />
-                  Sensoriandmed CSV
-                </a>
-              </Button>
-              <Button variant="outline" size="sm" asChild>
-                <a href={exportMetricsUrl(experiment.id)} download>
-                  <Download className="h-4 w-4 mr-1" />
-                  Mõõdikud CSV
+                  Laadi CSV
                 </a>
               </Button>
             </div>
