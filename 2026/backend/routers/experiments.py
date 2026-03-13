@@ -3,7 +3,7 @@ import datetime
 import io
 
 from fastapi import APIRouter, HTTPException
-from fastapi.responses import StreamingResponse
+from fastapi.responses import Response
 
 from models import Experiment, Metric, SensorData
 from schemas import ExperimentOut, MetricCreate, MetricOut, SensorDataOut
@@ -165,9 +165,8 @@ def export_combined_csv(experiment_id: int):
         row += [metric_values.get(name, "") for name in metric_names]
         writer.writerow(row)
 
-    buf.seek(0)
-    return StreamingResponse(
-        buf,
+    return Response(
+        content=buf.getvalue(),
         media_type="text/csv",
         headers={"Content-Disposition": f"attachment; filename=experiment_{experiment_id}.csv"},
     )
