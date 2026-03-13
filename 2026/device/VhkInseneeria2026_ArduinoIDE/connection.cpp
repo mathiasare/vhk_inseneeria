@@ -14,21 +14,25 @@ void connectWiFi(const char* ssid, const char* pass) {
   String fv = WiFi.firmwareVersion();
   Serial.print("WiFiNINA firmware: ");
   Serial.println(fv);
+  if (fv < WIFI_FIRMWARE_LATEST_VERSION) {
+    Serial.println("WARNING: outdated firmware — update via WiFiNINAFirmwareUpdater");
+  }
 
   Serial.print("Connecting to ");
   Serial.print(ssid);
 
-  int status = WL_IDLE_STATUS;
   int attempts = 0;
-  while (status != WL_CONNECTED && attempts < 10) {
+  while (WiFi.status() != WL_CONNECTED && attempts < 10) {
     Serial.print(".");
-    status = WiFi.begin(ssid, pass);
-    delay(3000);
+    WiFi.begin(ssid, pass);
+    delay(10000);
     attempts++;
   }
 
-  if (status != WL_CONNECTED) {
-    Serial.println("\nFailed to connect after 10 attempts.");
+  if (WiFi.status() != WL_CONNECTED) {
+    Serial.print("\nFailed to connect after 10 attempts (status=");
+    Serial.print(WiFi.status());
+    Serial.println(")");
     while (true)
       ;
   }

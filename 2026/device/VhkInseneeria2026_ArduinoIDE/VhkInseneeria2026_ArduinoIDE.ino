@@ -11,7 +11,7 @@ const int SOUND_ANALOG_PIN = A1;
 const int SOUND_DIGITAL_PIN = 2;
 
 unsigned long lastSendTime = 0;
-const unsigned long SEND_INTERVAL = 500;
+const unsigned long SEND_INTERVAL = 5000;
 
 void setup() {
   Serial.begin(115200);

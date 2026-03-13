@@ -53,6 +53,9 @@ export const addMetric = (expId: number, name: string, value: number) =>
 export const getSensorData = (expId: number) =>
   request<SensorData[]>(`/experiments/${expId}/sensor-data`);
 
+export const getUnassignedSensorData = (teamId: number) =>
+  request<SensorData[]>(`/teams/${teamId}/sensor-data/unassigned`);
+
 // Export URLs (direct download links, bypass fetch wrapper)
 export const exportSensorDataUrl = (expId: number) =>
   `${API_BASE}/experiments/${expId}/export/sensor-data.csv`;

@@ -35,9 +35,15 @@ async def team_ws(websocket: WebSocket, team_id: int):
                 await websocket.send_json({"error": "Missing acceleration or heart_rate"})
                 continue
 
+            active_exp = (
+                Experiment.select()
+                .where(Experiment.team == team_id, Experiment.is_active == True)  # noqa: E712
+                .first()
+            )
+
             SensorData.create(
                 team=team_id,
-                experiment=None,
+                experiment=active_exp.id if active_exp else None,
                 acceleration_x=float(acc.get("x", 0)),
                 acceleration_y=float(acc.get("y", 0)),
                 acceleration_z=float(acc.get("z", 0)),

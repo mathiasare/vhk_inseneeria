@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
-from models import Experiment, Team
-from schemas import ExperimentCreate, ExperimentOut, TeamOut, TeamRegister
+from models import Experiment, SensorData, Team
+from schemas import ExperimentCreate, ExperimentOut, SensorDataOut, TeamOut, TeamRegister
 
 router = APIRouter(prefix="/teams", tags=["teams"])
 
@@ -59,3 +59,26 @@ def create_experiment(team_id: int, body: ExperimentCreate):
         stopped_at=e.stopped_at,
         created_at=e.created_at,
     )
+
+
+@router.get("/{team_id}/sensor-data/unassigned", response_model=list[SensorDataOut])
+def list_unassigned_sensor_data(team_id: int):
+    _get_team(team_id)
+    return [
+        SensorDataOut(
+            id=s.id,
+            team_id=s.team_id,
+            experiment_id=s.experiment_id,
+            acceleration_x=s.acceleration_x,
+            acceleration_y=s.acceleration_y,
+            acceleration_z=s.acceleration_z,
+            heart_rate=s.heart_rate,
+            timestamp=s.timestamp,
+        )
+        for s in (
+            SensorData.select()
+            .where(SensorData.team == team_id, SensorData.experiment.is_null())
+            .order_by(SensorData.timestamp.desc())
+            .limit(200)
+        )
+    ]

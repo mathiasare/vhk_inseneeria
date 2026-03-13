@@ -5,6 +5,7 @@ import { getExperiments } from "@/lib/api";
 import type { Experiment } from "@/lib/types";
 import { ExperimentList } from "@/components/ExperimentList";
 import { ExperimentDetail } from "@/components/ExperimentDetail";
+import { UnassignedSensorDataTable } from "@/components/UnassignedSensorDataTable";
 
 export function TeamDashboardPage() {
   const { teamId: rawTeamId } = useParams({ from: "/teams/$teamId" });
@@ -35,9 +36,7 @@ export function TeamDashboardPage() {
         {selectedExp ? (
           <ExperimentDetail experiment={selectedExp} />
         ) : (
-          <div className="flex items-center justify-center h-full text-muted-foreground">
-            Select an experiment to view details
-          </div>
+          <UnassignedSensorDataTable teamId={teamId} />
         )}
       </main>
     </div>
