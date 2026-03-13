@@ -11,9 +11,9 @@ from routers import experiments, teams, websocket
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     db.connect()
-    db.drop_tables(ALL_MODELS)
-    db.create_tables(ALL_MODELS)
-    seed_teams()
+    #db.drop_tables(ALL_MODELS)
+    #db.create_tables(ALL_MODELS)
+    #seed_teams()
     yield
     if not db.is_closed():
         db.close()
