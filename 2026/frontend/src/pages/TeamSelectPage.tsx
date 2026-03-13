@@ -36,7 +36,7 @@ export function TeamSelectPage() {
       <p className="text-muted-foreground mb-2">
         Vali oma meeskond alustamiseks
       </p>
-      <p className="text-muted-foreground mb-8">
+      <p className="text-muted-foreground mb-2">
         Töötoa juhendi leiad{" "}
         <a
           href="https://colab.research.google.com/drive/1JufMA1bN2ukw2XgofIQOIDTFdUnBA0z5?usp=sharing"
@@ -45,6 +45,17 @@ export function TeamSelectPage() {
           className="text-primary underline underline-offset-4 hover:text-primary/80"
         >
           siit
+        </a>
+      </p>
+      <p className="text-muted-foreground mb-8">
+        Lae alla{" "}
+        <a
+          href="https://download-directory.github.io/?url=https://github.com/mathiasare/vhk_inseneeria/tree/master/2026/device/VhkInseneeria2026_ArduinoIDE"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary underline underline-offset-4 hover:text-primary/80"
+        >
+          projekti kood
         </a>
       </p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
