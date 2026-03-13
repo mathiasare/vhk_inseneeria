@@ -25,7 +25,7 @@ export function ExperimentDetail({ experiment }: { experiment: Experiment }) {
   const start = useMutation({
     mutationFn: () => startExperiment(experiment.id),
     onSuccess: () => {
-      toast.success("Experiment started");
+      toast.success("Eksperiment käivitatud");
       invalidate();
     },
     onError: (err) => toast.error(String(err)),
@@ -34,7 +34,7 @@ export function ExperimentDetail({ experiment }: { experiment: Experiment }) {
   const stop = useMutation({
     mutationFn: () => stopExperiment(experiment.id),
     onSuccess: () => {
-      toast.success("Experiment stopped");
+      toast.success("Eksperiment peatatud");
       invalidate();
     },
     onError: (err) => toast.error(String(err)),
@@ -48,18 +48,18 @@ export function ExperimentDetail({ experiment }: { experiment: Experiment }) {
             <h1 className="text-2xl font-bold">{experiment.name}</h1>
             <div className="flex items-center gap-2 mt-1">
               {experiment.is_active ? (
-                <Badge className="bg-green-600 text-white">Active</Badge>
+                <Badge className="bg-green-600 text-white">Aktiivne</Badge>
               ) : experiment.stopped_at ? (
-                <Badge variant="destructive">Stopped</Badge>
+                <Badge variant="destructive">Peatatud</Badge>
               ) : (
-                <Badge variant="secondary">Idle</Badge>
+                <Badge variant="secondary">Ootel</Badge>
               )}
             </div>
           </div>
           <TabsList>
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="metrics">Metrics</TabsTrigger>
-            <TabsTrigger value="sensor-data">Sensor Data</TabsTrigger>
+            <TabsTrigger value="overview">Ülevaade</TabsTrigger>
+            <TabsTrigger value="metrics">Mõõdikud</TabsTrigger>
+            <TabsTrigger value="sensor-data">Sensoriandmed</TabsTrigger>
           </TabsList>
         </div>
 
@@ -67,7 +67,7 @@ export function ExperimentDetail({ experiment }: { experiment: Experiment }) {
           <div className="rounded-lg border border-border bg-card p-6 space-y-4">
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="text-muted-foreground">Started at</span>
+                <span className="text-muted-foreground">Käivitatud</span>
                 <p className="font-medium">
                   {experiment.started_at
                     ? new Date(experiment.started_at).toLocaleString()
@@ -75,7 +75,7 @@ export function ExperimentDetail({ experiment }: { experiment: Experiment }) {
                 </p>
               </div>
               <div>
-                <span className="text-muted-foreground">Stopped at</span>
+                <span className="text-muted-foreground">Peatatud</span>
                 <p className="font-medium">
                   {experiment.stopped_at
                     ? new Date(experiment.stopped_at).toLocaleString()
@@ -90,7 +90,7 @@ export function ExperimentDetail({ experiment }: { experiment: Experiment }) {
                 disabled={experiment.is_active || start.isPending}
               >
                 <Play className="h-4 w-4 mr-1" />
-                Start
+                Käivita
               </Button>
               <Button
                 variant="destructive"
@@ -98,7 +98,7 @@ export function ExperimentDetail({ experiment }: { experiment: Experiment }) {
                 disabled={!experiment.is_active || stop.isPending}
               >
                 <Square className="h-4 w-4 mr-1" />
-                Stop
+                Peata
               </Button>
             </div>
 
@@ -106,13 +106,13 @@ export function ExperimentDetail({ experiment }: { experiment: Experiment }) {
               <Button variant="outline" size="sm" asChild>
                 <a href={exportSensorDataUrl(experiment.id)} download>
                   <Download className="h-4 w-4 mr-1" />
-                  Sensor Data CSV
+                  Sensoriandmed CSV
                 </a>
               </Button>
               <Button variant="outline" size="sm" asChild>
                 <a href={exportMetricsUrl(experiment.id)} download>
                   <Download className="h-4 w-4 mr-1" />
-                  Metrics CSV
+                  Mõõdikud CSV
                 </a>
               </Button>
             </div>

@@ -20,9 +20,9 @@ export function UnassignedSensorDataTable({ teamId }: { teamId: number }) {
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <h2 className="text-lg font-semibold">Incoming Sensor Data</h2>
+        <h2 className="text-lg font-semibold">Sissetulevad sensoriandmed</h2>
         <p className="text-sm text-muted-foreground">
-          Live readings not yet assigned to an experiment
+          Reaalajas andmed, mis pole veel eksperimendiga seotud
         </p>
       </div>
 
@@ -32,11 +32,11 @@ export function UnassignedSensorDataTable({ teamId }: { teamId: number }) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Timestamp</TableHead>
-              <TableHead className="text-right">Accel X</TableHead>
-              <TableHead className="text-right">Accel Y</TableHead>
-              <TableHead className="text-right">Accel Z</TableHead>
-              <TableHead className="text-right">Heart Rate</TableHead>
+              <TableHead>Ajatempel</TableHead>
+              <TableHead className="text-right">Kiirendus X</TableHead>
+              <TableHead className="text-right">Kiirendus Y</TableHead>
+              <TableHead className="text-right">Kiirendus Z</TableHead>
+              <TableHead className="text-right">Pulsisagedus</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -46,7 +46,7 @@ export function UnassignedSensorDataTable({ teamId }: { teamId: number }) {
                   colSpan={5}
                   className="text-center text-muted-foreground"
                 >
-                  Loading…
+                  Laen…
                 </TableCell>
               </TableRow>
             ) : readings?.length === 0 ? (
@@ -55,7 +55,7 @@ export function UnassignedSensorDataTable({ teamId }: { teamId: number }) {
                   colSpan={5}
                   className="text-center text-muted-foreground"
                 >
-                  No incoming sensor data
+                  Sissetulevaid sensoriandmeid pole
                 </TableCell>
               </TableRow>
             ) : (

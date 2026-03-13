@@ -5,5 +5,5 @@
 
 #define WS_SERVER "inseback.mthsr.com"
 #define WS_PORT 443
-#define TEAM_ID 1
-#define WS_PATH "/ws/teams/1"
+#define TEAM_ID 2
+#define WS_PATH "/ws/teams/2"

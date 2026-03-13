@@ -17,9 +17,9 @@ import { toast } from "sonner";
 import { Plus, ArrowLeft } from "lucide-react";
 
 function statusBadge(exp: Experiment) {
-  if (exp.is_active) return <Badge className="bg-green-600 text-white">Active</Badge>;
-  if (exp.stopped_at) return <Badge variant="destructive">Stopped</Badge>;
-  return <Badge variant="secondary">Idle</Badge>;
+  if (exp.is_active) return <Badge className="bg-green-600 text-white">Aktiivne</Badge>;
+  if (exp.stopped_at) return <Badge variant="destructive">Peatatud</Badge>;
+  return <Badge variant="secondary">Ootel</Badge>;
 }
 
 export function ExperimentList({
@@ -41,7 +41,7 @@ export function ExperimentList({
   const create = useMutation({
     mutationFn: () => createExperiment(teamId, newName),
     onSuccess: (exp) => {
-      toast.success(`Experiment "${exp.name}" created`);
+      toast.success(`Eksperiment "${exp.name}" loodud`);
       queryClient.invalidateQueries({ queryKey: ["experiments", teamId] });
       setNewName("");
       setDialogOpen(false);
@@ -60,17 +60,17 @@ export function ExperimentList({
         >
           <ArrowLeft className="h-4 w-4" />
         </Button>
-        <h2 className="font-semibold text-sm flex-1">Team {teamId}</h2>
+        <h2 className="font-semibold text-sm flex-1">Meeskond {teamId}</h2>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
             <Button size="sm">
               <Plus className="h-4 w-4 mr-1" />
-              New
+              Uus
             </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>New Experiment</DialogTitle>
+              <DialogTitle>Uus eksperiment</DialogTitle>
             </DialogHeader>
             <form
               className="flex flex-col gap-4"
@@ -80,7 +80,7 @@ export function ExperimentList({
               }}
             >
               <Input
-                placeholder="Experiment name"
+                placeholder="Eksperimendi nimi"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
                 autoFocus
@@ -89,7 +89,7 @@ export function ExperimentList({
                 type="submit"
                 disabled={!newName.trim() || create.isPending}
               >
-                Create
+                Loo
               </Button>
             </form>
           </DialogContent>
@@ -99,7 +99,7 @@ export function ExperimentList({
       <div className="flex-1 overflow-auto">
         {experiments.length === 0 ? (
           <p className="p-4 text-sm text-muted-foreground">
-            No experiments yet
+            Eksperimente pole veel
           </p>
         ) : (
           <ul className="divide-y divide-border">

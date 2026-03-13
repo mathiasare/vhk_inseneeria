@@ -6,9 +6,8 @@ WebSocketClient ws(wifi, WS_SERVER, WS_PORT);
 
 void connectWiFi(const char* ssid, const char* pass) {
   if (WiFi.status() == WL_NO_MODULE) {
-    Serial.println("WiFi module not found!");
-    while (true)
-      ;
+    Serial.println("WiFi module not found! Continuing without WiFi.");
+    return;
   }
 
   String fv = WiFi.firmwareVersion();
@@ -32,9 +31,8 @@ void connectWiFi(const char* ssid, const char* pass) {
   if (WiFi.status() != WL_CONNECTED) {
     Serial.print("\nFailed to connect after 10 attempts (status=");
     Serial.print(WiFi.status());
-    Serial.println(")");
-    while (true)
-      ;
+    Serial.println("). Continuing without WiFi.");
+    return;
   }
 
   Serial.println(" connected!");

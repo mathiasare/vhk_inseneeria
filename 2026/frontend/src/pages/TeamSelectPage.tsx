@@ -25,16 +25,27 @@ export function TeamSelectPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-muted-foreground">Loading teams…</p>
+        <p className="text-muted-foreground">Laen meeskondi…</p>
       </div>
     );
   }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-8">
-      <h1 className="text-3xl font-bold mb-2">IoT Workshop</h1>
+      <h1 className="text-3xl font-bold mb-2">Masinõppe alused (Diskrimineerimine)</h1>
+      <p className="text-muted-foreground mb-2">
+        Vali oma meeskond alustamiseks
+      </p>
       <p className="text-muted-foreground mb-8">
-        Select your team to get started
+        Töötoa juhendi leiad{" "}
+        <a
+          href="https://colab.research.google.com/drive/1JufMA1bN2ukw2XgofIQOIDTFdUnBA0z5?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary underline underline-offset-4 hover:text-primary/80"
+        >
+          siit
+        </a>
       </p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
         {teams?.map((team) => (
@@ -69,7 +80,7 @@ function TeamCard({
   const register = useMutation({
     mutationFn: () => registerTeam(teamId, inputName),
     onSuccess: () => {
-      toast.success(`Team ${teamId} registered!`);
+      toast.success(`Meeskond ${teamId} registreeritud!`);
       setInputName("");
       onRegistered();
     },
@@ -84,15 +95,15 @@ function TeamCard({
       onClick={isRegistered ? onSelect : undefined}
     >
       <CardHeader>
-        <CardTitle>Team {teamId}</CardTitle>
+        <CardTitle>Meeskond {teamId}</CardTitle>
         <CardDescription>
-          {isRegistered ? name : "Unregistered"}
+          {isRegistered ? name : "Registreerimata"}
         </CardDescription>
       </CardHeader>
       <CardContent>
         {isRegistered ? (
           <Button variant="secondary" className="w-full" onClick={onSelect}>
-            Enter Dashboard
+            Ava töölaud
           </Button>
         ) : (
           <form
@@ -104,7 +115,7 @@ function TeamCard({
             }}
           >
             <Input
-              placeholder="Team name"
+              placeholder="Meeskonna nimi"
               value={inputName}
               onChange={(e) => setInputName(e.target.value)}
             />
@@ -112,7 +123,7 @@ function TeamCard({
               type="submit"
               disabled={!inputName.trim() || register.isPending}
             >
-              Register
+              Registreeri
             </Button>
           </form>
         )}

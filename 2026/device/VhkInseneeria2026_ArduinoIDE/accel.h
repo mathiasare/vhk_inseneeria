@@ -3,8 +3,9 @@
 #include <Arduino.h>
 
 struct MotionData {
-  int16_t ax, ay, az;
-  int16_t gx, gy, gz;
+  float ax = 0, ay = 0, az = 0;
+  float gx = 0, gy = 0, gz = 0;
+  float temperature = 0;
 };
 
 void setupAccel();

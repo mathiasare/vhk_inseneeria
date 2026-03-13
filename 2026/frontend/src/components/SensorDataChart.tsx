@@ -40,7 +40,7 @@ export function SensorDataChart({ data }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <div className="rounded-lg border border-border bg-card p-4">
-        <h3 className="text-sm font-medium text-muted-foreground mb-3">Acceleration</h3>
+        <h3 className="text-sm font-medium text-muted-foreground mb-3">Kiirendus</h3>
         <ResponsiveContainer width="100%" height={200}>
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
@@ -88,7 +88,7 @@ export function SensorDataChart({ data }: Props) {
       </div>
 
       <div className="rounded-lg border border-border bg-card p-4">
-        <h3 className="text-sm font-medium text-muted-foreground mb-3">Heart Rate</h3>
+        <h3 className="text-sm font-medium text-muted-foreground mb-3">Pulsisagedus</h3>
         <ResponsiveContainer width="100%" height={200}>
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
@@ -109,7 +109,7 @@ export function SensorDataChart({ data }: Props) {
             <Line
               type="monotone"
               dataKey="hr"
-              name="Heart Rate"
+              name="Pulsisagedus"
               stroke="var(--chart-5)"
               dot={false}
               strokeWidth={2}

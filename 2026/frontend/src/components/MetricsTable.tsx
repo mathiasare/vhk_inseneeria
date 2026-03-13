@@ -26,7 +26,7 @@ export function MetricsTable({ experimentId }: { experimentId: number }) {
   const add = useMutation({
     mutationFn: () => addMetric(experimentId, name, parseFloat(value)),
     onSuccess: () => {
-      toast.success("Metric added");
+      toast.success("Mõõdik lisatud");
       queryClient.invalidateQueries({ queryKey: ["metrics", experimentId] });
       setName("");
       setValue("");
@@ -40,22 +40,22 @@ export function MetricsTable({ experimentId }: { experimentId: number }) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Value</TableHead>
-              <TableHead>Created</TableHead>
+              <TableHead>Nimi</TableHead>
+              <TableHead>Väärtus</TableHead>
+              <TableHead>Loodud</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {isLoading ? (
               <TableRow>
                 <TableCell colSpan={3} className="text-center text-muted-foreground">
-                  Loading…
+                  Laen…
                 </TableCell>
               </TableRow>
             ) : metrics?.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={3} className="text-center text-muted-foreground">
-                  No metrics recorded
+                  Mõõdikuid pole salvestatud
                 </TableCell>
               </TableRow>
             ) : (
@@ -81,13 +81,13 @@ export function MetricsTable({ experimentId }: { experimentId: number }) {
         }}
       >
         <Input
-          placeholder="Metric name"
+          placeholder="Mõõdiku nimi"
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="max-w-48"
         />
         <Input
-          placeholder="Value"
+          placeholder="Väärtus"
           type="number"
           step="any"
           value={value}
@@ -98,7 +98,7 @@ export function MetricsTable({ experimentId }: { experimentId: number }) {
           type="submit"
           disabled={!name.trim() || !value.trim() || add.isPending}
         >
-          Add Metric
+          Lisa mõõdik
         </Button>
       </form>
     </div>

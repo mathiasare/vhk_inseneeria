@@ -25,24 +25,24 @@ export function SensorDataTable({ experimentId }: { experimentId: number }) {
         <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Timestamp</TableHead>
-            <TableHead className="text-right">Accel X</TableHead>
-            <TableHead className="text-right">Accel Y</TableHead>
-            <TableHead className="text-right">Accel Z</TableHead>
-            <TableHead className="text-right">Heart Rate</TableHead>
+            <TableHead>Ajatempel</TableHead>
+            <TableHead className="text-right">Kiirendus X</TableHead>
+            <TableHead className="text-right">Kiirendus Y</TableHead>
+            <TableHead className="text-right">Kiirendus Z</TableHead>
+            <TableHead className="text-right">Pulsisagedus</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {isLoading ? (
             <TableRow>
               <TableCell colSpan={5} className="text-center text-muted-foreground">
-                Loading…
+                Laen…
               </TableCell>
             </TableRow>
           ) : readings?.length === 0 ? (
             <TableRow>
               <TableCell colSpan={5} className="text-center text-muted-foreground">
-                No sensor data recorded
+                Sensoriandmeid pole salvestatud
               </TableCell>
             </TableRow>
           ) : (
