@@ -7,7 +7,7 @@ const int PULSE_PIN = A0;
 const int PULSE_THRESHOLD = 550;
 
 unsigned long lastSendTime = 0;
-const unsigned long SEND_INTERVAL = 500;
+const unsigned long SEND_INTERVAL = 5000;
 
 void setup() {
   Serial.begin(115200);

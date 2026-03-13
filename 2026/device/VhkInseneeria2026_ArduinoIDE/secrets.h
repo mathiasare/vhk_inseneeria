@@ -1,7 +1,7 @@
 #pragma once
 
-#define WIFI_SSID "Korter 1"
-#define WIFI_PASS "Pohlamoo5"
+#define WIFI_SSID "iotest"
+#define WIFI_PASS "password"
 
 #define WS_SERVER "inseback.mthsr.com"
 #define WS_PORT 443

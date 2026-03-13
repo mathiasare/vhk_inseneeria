@@ -13,6 +13,7 @@ export function SensorDataTable({ experimentId }: { experimentId: number }) {
   const { data: readings, isLoading } = useQuery({
     queryKey: ["sensor-data", experimentId],
     queryFn: () => getSensorData(experimentId),
+    refetchInterval: 5_000,
   });
 
   return (
