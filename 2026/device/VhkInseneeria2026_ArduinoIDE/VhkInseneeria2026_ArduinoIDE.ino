@@ -2,9 +2,13 @@
 #include "connection.h"
 #include "pulse.h"
 #include "accel.h"
+#include "sound.h"
 
 const int PULSE_PIN = A0;
 const int PULSE_THRESHOLD = 550;
+
+const int SOUND_ANALOG_PIN = A1;
+const int SOUND_DIGITAL_PIN = 2;
 
 unsigned long lastSendTime = 0;
 const unsigned long SEND_INTERVAL = 500;
@@ -18,6 +22,7 @@ void setup() {
 
   setupPulseSensor(PULSE_PIN, PULSE_THRESHOLD);
   setupAccel();
+  setupSoundSensor(SOUND_ANALOG_PIN, SOUND_DIGITAL_PIN);
   connectWiFi(WIFI_SSID, WIFI_PASS);
   connectWebSocket(WS_PATH);
 }
@@ -56,6 +61,8 @@ void loop() {
     int bpm = getBPM();
     MotionData motion;
     readMotionData(motion);
+   SoundData sound;
+    readSoundData(sound);
 
     Serial.print("BPM: ");
     Serial.print(bpm);
@@ -63,6 +70,8 @@ void loop() {
     Serial.print(motion.ax); Serial.print(", ");
     Serial.print(motion.ay); Serial.print(", ");
     Serial.println(motion.az);
+    Serial.print(" | ");
+    logSoundData(sound);
 
     if (isWebSocketConnected()) {
       ws.beginMessage(TYPE_TEXT);
@@ -74,6 +83,10 @@ void loop() {
       ws.print(motion.ay);
       ws.print(",\"z\":");
       ws.print(motion.az);
+      ws.print("},\"sound\":{\"analog\":");
+      ws.print(sound.analogValue);
+      ws.print(",\"triggered\":");
+      ws.print(sound.digitalTriggered ? "true" : "false");
       ws.print("}}");
       ws.endMessage();
     }
