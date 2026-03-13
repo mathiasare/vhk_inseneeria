@@ -168,5 +168,8 @@ def export_combined_csv(experiment_id: int):
     return Response(
         content=buf.getvalue(),
         media_type="text/csv",
-        headers={"Content-Disposition": f"attachment; filename=experiment_{experiment_id}.csv"},
+        headers={
+            "Content-Disposition": f"attachment; filename=experiment_{experiment_id}.csv",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+        },
     )
